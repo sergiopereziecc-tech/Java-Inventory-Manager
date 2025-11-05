@@ -1,29 +1,44 @@
 package com.miproyecto.inventorymanager.model;
 
 public abstract class Product {
+
+    //Product es la superclase, las clases hijas heredan de aqui variables y metodos
+    //Es abstracta por lo que no se puede crear un objeto a partir de ella
+
+    //Definimos las variables que se usan en todos nuestros Productos
+
     private Long id;
     private String name;
     private double price;
     private ProductCategory productCategory;
 
-
+    //Creación de constructor con todos los campos
+    //Creación previa de los setters para manejar exceptions, DRY coding sin repetición
     public Product(Long id, String name, double price, ProductCategory productCategory) {
         setId(id);
         setName(name);
         setPrice(price);
         setProductCategory(productCategory);
     }
+    //Creamos constructor sin ID, ya que posteriormente tendremos un metodo para crear ID de objetos nuevos
+    // Usamos 'this(null, ...)' para encadenar al constructor principal y reutilizar sus validaciones.
+    //null, ya que no tenemos id pero nuestro metodo save se ocupara de eso despues
     public Product(String name, double price, ProductCategory productCategory){
         this(null, name, price, productCategory);
     }
-
+    //Copy Constructor
+    // Copy Constructor: Necesario para implementar la clonación segura (Patrón Prototipo).
     public Product(Product source){
         this.id = source.id;
         setName(source.name);
         setPrice(source.price);
         setProductCategory(source.productCategory);
     }
-    
+
+    //Metodos abstractos que simplemente nos obligan a crearlos en las otras clases
+    //CalculateTaxes para calcular los impuestos de los productos
+    //Metodo Clone para generar deep copys
+    //Metodo Clone: Implementa el Patrón Prototipo, creando una copia profunda del objeto.
     public abstract double calculateTaxes();
     public abstract Product clone();
 
