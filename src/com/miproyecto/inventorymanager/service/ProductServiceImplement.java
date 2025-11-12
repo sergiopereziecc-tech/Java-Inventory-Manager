@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import com.miproyecto.inventorymanager.model.Product;
 
-public class ProductService {
+public class ProductServiceImplement implements ProductService{
     //Variables: Hashmap<Key,value>
     private final HashMap<Long, Product> inventory = new HashMap<>();
     private Long nextId = 1L;

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.miproyecto.inventorymanager.model.Product;
 
-public class InMemoryProductService {
+public class InMemoryProductServiceLegacy {
     private final HashMap<Long, Product> inventory = new HashMap<>();
     // Variable para asignar id aleatorios a los productos
     private Long nextId = 1L;
