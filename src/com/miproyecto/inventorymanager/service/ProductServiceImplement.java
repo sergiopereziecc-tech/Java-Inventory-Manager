@@ -1,12 +1,10 @@
 package com.miproyecto.inventorymanager.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.NoSuchElementException;
+
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+
 
 import com.miproyecto.inventorymanager.model.Product;
 import com.miproyecto.inventorymanager.repository.InMemoryProductRepositoryImpl;
