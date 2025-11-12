@@ -1,17 +1,19 @@
 package com.miproyecto.inventorymanager.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class FoodProduct extends Product{
     private LocalDate expirationDate;
-    private static final double IVA_RATE = 0.05;
+    private static final BigDecimal IVA_RATE = new BigDecimal("0.05");
 
-    public FoodProduct(Long id, String name, double price, ProductCategory productCategory, LocalDate expirationDate){
+    public FoodProduct(Long id, String name, BigDecimal price, ProductCategory productCategory, LocalDate expirationDate){
         super(id, name, price, productCategory);
         setExpirationDate(expirationDate);
     }
 
-    public FoodProduct(String name, double price, ProductCategory productCategory, LocalDate expirationDate){
+    public FoodProduct(String name, BigDecimal price, ProductCategory productCategory, LocalDate expirationDate){
         super(name, price, productCategory);
         setExpirationDate(expirationDate);
     }
@@ -27,8 +29,9 @@ public class FoodProduct extends Product{
         }
     }
     @Override
-    public double calculateTaxes() {
-        return getPrice() * IVA_RATE;
+    public BigDecimal  calculateTaxes() {
+        BigDecimal taxAmount = getPrice().multiply(IVA_RATE);
+        return taxAmount.setScale(2, RoundingMode.HALF_UP);
     }
     @Override
     public Product clone() {

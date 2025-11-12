@@ -1,5 +1,8 @@
 package com.miproyecto.inventorymanager.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class ElectronicProduct extends Product{
     //Clase hija de la super clase Product
     //Activamos la herencia usando la palabra clave extends
@@ -9,21 +12,21 @@ public class ElectronicProduct extends Product{
     //Declaramos constantes, variables que no van a ser modificadas
     //Usamos la palabra clave final, y private porque solos serán usadas en esta clase
     private static final int MIN_WARRANTY = 0;
-    private static final double IVA_RATE = 0.18;
+    private static final BigDecimal IVA_RATE = new BigDecimal("0.18");
 
     
     //Constructor con todos los campos, los declarados aqui y en la super clase
     // Llama al constructor de la clase base y luego inicializa (y valida) los campos únicos.
     //Usamos la palabra super y llamamos a todos los campos heredados
     //Tiene que ir primero que las variables unicas de esta clase
-    public ElectronicProduct(int warrantyMonths, Long id, String name, double price, ProductCategory productCategory){
+    public ElectronicProduct(int warrantyMonths, Long id, String name, BigDecimal price, ProductCategory productCategory){
         super(id, name, price, productCategory);
         setWarrantyMonths(warrantyMonths);
     }
     //Misma dinámica, mismo constructor pero sin el campo ID
     // Usamos 'super(name, ...)' para encadenar al constructor sin ID de la clase base, manteniendo el ID como nulo para la posterior asignación del Servicio.
     
-    public ElectronicProduct(int warrantyMonths, String name, double price, ProductCategory productCategory){
+    public ElectronicProduct(int warrantyMonths, String name, BigDecimal price, ProductCategory productCategory){
         super(name, price, productCategory);
         setWarrantyMonths(warrantyMonths);
     }
@@ -46,8 +49,9 @@ public class ElectronicProduct extends Product{
     //Override de la clase abstracta
     //Calcula los taxes y los devuelve
     @Override
-    public double calculateTaxes() {
-        return getPrice() * IVA_RATE;
+    public BigDecimal  calculateTaxes() {
+        BigDecimal taxAmount = getPrice().multiply(IVA_RATE);
+        return taxAmount.setScale(2, RoundingMode.HALF_UP);
     }
 
     public int getWarrantyMonths() {

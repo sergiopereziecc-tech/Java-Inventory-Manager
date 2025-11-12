@@ -1,5 +1,8 @@
 package com.miproyecto.inventorymanager.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class ClothingProduct extends Product {
     //Clase hija de Producto, declaramos con la keyword extends
 
@@ -18,18 +21,18 @@ public class ClothingProduct extends Product {
     private Material material;
 
     //Constante IVA que no se modifica
-    private static final double IVA_RATE = 0.23;
+    private static final BigDecimal IVA_RATE = new BigDecimal("0.23");
 
     //Constructor de la clase ClothingProduct con todos sus campos
     //Hereda de la superclase, usando el keyword super
-    public ClothingProduct(Long id, String name, double price, ProductCategory productCategory,Size size, Material material){
+    public ClothingProduct(Long id, String name, BigDecimal price , ProductCategory productCategory,Size size, Material material){
         super(id, name, price, productCategory);
         this.size = size;
         this.material = material;
     }
     //Constructor con todos los campos menos ID
     //Creamos ID aleatorio en service
-    public ClothingProduct(String name, double price, ProductCategory productCategory,Size size, Material material){
+    public ClothingProduct(String name, BigDecimal price, ProductCategory productCategory,Size size, Material material){
         super(name, price, productCategory);
         this.size = size;
         this.material = material;
@@ -49,8 +52,9 @@ public class ClothingProduct extends Product {
     //Override del metodo calculateTaxes, creado en la clase abstracta Product
     //Calcula los impuestos
     @Override
-    public double calculateTaxes() {
-        return getPrice() * IVA_RATE;
+    public BigDecimal  calculateTaxes() {
+        BigDecimal taxAmount = getPrice().multiply(IVA_RATE);
+        return taxAmount.setScale(2, RoundingMode.HALF_UP);
     }
 
     //GETTERS AND SETTERS
